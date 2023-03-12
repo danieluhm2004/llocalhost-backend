@@ -1,12 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
 
-@Controller()
+import { ApiTags } from '@nestjs/swagger';
+import { AppService } from './app.service';
+import { ApiResponseBody } from './common/decorators/api-response-body';
+import { ResClusterInfoDto } from './common/dto/clusterInfo.dto';
+
+@ApiTags('시스템')
+@Controller({ version: VERSION_NEUTRAL })
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @ApiResponseBody(ResClusterInfoDto)
+  getClusterInfo() {
+    return this.appService.getClusterInfoFromCache();
   }
 }
