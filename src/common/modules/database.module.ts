@@ -2,6 +2,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import { Module } from '@nestjs/common';
 import _ from 'lodash';
+import { Port } from '../../port/entities/port.entity';
 import { Session } from '../../session/entities/session.entity';
 import { User } from '../../user/entities/user.entity';
 
@@ -14,7 +15,7 @@ export const options: TypeOrmModuleOptions = {
   password: _.get(process.env, 'DB_PASSWORD'),
   keepConnectionAlive: true,
   synchronize: false,
-  entities: [User, Session],
+  entities: [User, Session, Port],
 };
 
 @Module({ imports: [TypeOrmModule.forRoot(options)] })

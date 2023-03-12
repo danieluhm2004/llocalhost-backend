@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { Port } from '../../port/entities/port.entity';
 import { Session } from '../../session/entities/session.entity';
 
 const exposePrivateGroups = [
@@ -49,6 +50,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];
+
+  @OneToMany(() => Port, (port) => port.user)
+  ports: Port[];
 
   @IsBoolean({
     description: '관리자 인증 여부',

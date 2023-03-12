@@ -47,4 +47,9 @@ export const Opcode = {
     HttpStatus.UNAUTHORIZED,
     'The access token has expired.',
   ),
+  CannotFindPort: $(
+    1008,
+    HttpStatus.NOT_FOUND,
+    'Cannot find the requested port.',
+  ),
 };
