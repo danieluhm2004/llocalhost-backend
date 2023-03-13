@@ -24,7 +24,11 @@ export class Port extends BaseEntity {
   @Column()
   @IsString({
     description: '포트 이름',
-    example: 'Port 1',
+    example: 'danieluhm2004',
+    pattern: {
+      regex: /^[a-zA-Z0-9-_]{1,61}$/,
+      message: '이름은 영문, 숫자, -, _ 만 사용할 수 있습니다.',
+    },
   })
   name: string;
 

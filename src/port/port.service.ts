@@ -49,8 +49,9 @@ export class PortService {
     return port;
   }
 
-  async getById(portId: number): Promise<Port> {
-    const port = await this.portRepository.findOneBy({ portId });
+  async getByName(user: User, name: string): Promise<Port> {
+    const { userId } = user;
+    const port = await this.portRepository.findOneBy({ userId, name });
     if (!port) throw Opcode.CannotFindPort();
     return port;
   }
@@ -60,6 +61,9 @@ export class PortService {
       createdBy.isAdmin && data.userId
         ? await this.userService.get(data.userId)
         : createdBy;
+
+    const isExists = await this.isUsingName(data.name);
+    if (isExists) throw Opcode.AlreadyUsingPortName();
 
     const { userId } = user;
     this.logger.log(
@@ -94,8 +98,17 @@ export class PortService {
     return this.portRepository.countBy({ portId }).then((r) => r > 0);
   }
 
+  async isUsingName(name: string): Promise<boolean> {
+    return this.portRepository.countBy({ name }).then((r) => r > 0);
+  }
+
   async edit(port: Port, data: BodyEditPortDto): Promise<Port> {
     this.logger.log(`${port.name}(${port.portId}) 포트를 수정합니다.`);
+    if (data.name && data.name !== port.name) {
+      const isUsingName = await this.isUsingName(data.name);
+      if (isUsingName) throw Opcode.AlreadyUsingPortName();
+    }
+
     return this.portRepository.merge(port, data).save();
   }
 

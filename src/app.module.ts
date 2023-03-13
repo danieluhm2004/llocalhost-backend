@@ -50,6 +50,6 @@ export class AppModule implements NestModule {
 
     consumer.apply(UserMiddleware).forRoutes(':version/users/:userId');
     consumer.apply(SessionMiddleware).forRoutes(':version/sessions/:sessionId');
-    consumer.apply(PortMiddleware).forRoutes(':version/ports/:portId');
+    consumer.apply(PortMiddleware).forRoutes(':version/ports/:name');
   }
 }

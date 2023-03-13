@@ -52,4 +52,9 @@ export const Opcode = {
     HttpStatus.NOT_FOUND,
     'Cannot find the requested port.',
   ),
+  AlreadyUsingPortName: $(
+    1009,
+    HttpStatus.BAD_REQUEST,
+    'The port name is already in use.',
+  ),
 };

@@ -47,9 +47,9 @@ export class PortController {
     return res;
   }
 
-  @Get(':portId')
+  @Get(':name')
   @ApiOperation({ summary: '포트 조회' })
-  @ApiParam({ name: 'portId', description: '포트 ID' })
+  @ApiParam({ name: 'name', description: '포트 ID' })
   @ApiResponseBody(ResGetPortDto)
   async get(@PropertyParam('port') port: Port): Promise<ResGetPortDto> {
     const res = new ResGetPortDto();
@@ -57,9 +57,9 @@ export class PortController {
     return res;
   }
 
-  @Get(':portId/access')
+  @Get(':name/access')
   @ApiOperation({ summary: '포트 접근 토큰 발급' })
-  @ApiParam({ name: 'portId', description: '포트 ID' })
+  @ApiParam({ name: 'name', description: '포트 ID' })
   @ApiResponseBody(ResAccessPortDto)
   async access(@PropertyParam('port') port: Port): Promise<ResAccessPortDto> {
     const res = new ResAccessPortDto();
@@ -79,9 +79,9 @@ export class PortController {
     return res;
   }
 
-  @Patch(':portId')
+  @Patch(':name')
   @ApiOperation({ summary: '포트 수정' })
-  @ApiParam({ name: 'portId', description: '포트 ID' })
+  @ApiParam({ name: 'name', description: '포트 ID' })
   @ApiResponseBody(ResEditPortDto)
   async edit(
     @PropertyParam('port') port: Port,
@@ -92,9 +92,9 @@ export class PortController {
     return res;
   }
 
-  @Delete(':portId')
+  @Delete(':name')
   @ApiOperation({ summary: '포트 삭제' })
-  @ApiParam({ name: 'portId', description: '포트 ID' })
+  @ApiParam({ name: 'name', description: '포트 ID' })
   @ApiResponseBody(ResDeletePortDto)
   async delete(@PropertyParam('port') port: Port): Promise<ResDeletePortDto> {
     const res = new ResDeletePortDto();
