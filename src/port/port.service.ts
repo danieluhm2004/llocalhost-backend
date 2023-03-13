@@ -84,7 +84,7 @@ export class PortService {
 
   async allocate(): Promise<number> {
     while (true) {
-      const port = this.random(35000, 59999);
+      const port = this.random(10000, 34999);
       const isExists = await this.isExists(port);
       if (!isExists) return port;
     }
