@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { sign, SignOptions } from 'jsonwebtoken';
 import { FindManyOptions, FindOptionsWhere, Repository } from 'typeorm';
 import { generateWhere, WhereType } from '../common/generateWhere';
 import { Opcode } from '../common/opcode';
@@ -67,6 +68,14 @@ export class PortService {
 
     const portId = await this.allocate();
     return this.portRepository.create({ ...data, portId, userId }).save();
+  }
+
+  access(port: Port): string {
+    const { portId, name, userId } = port;
+    this.logger.log(`${name}(${portId}) 포트에 접근을 요청합니다.`);
+    const payload = { portId, name, userId };
+    const options: SignOptions = { expiresIn: '1m', subject: 'port' };
+    return sign(payload, process.env.BRIDGE_SECRET, options);
   }
 
   async allocate(): Promise<number> {

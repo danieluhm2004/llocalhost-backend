@@ -18,6 +18,7 @@ import { AuthorizedUser } from '../common/decorators/auth.decorator';
 import {} from '../common/decorators/guard.decorator';
 import { PropertyParam } from '../common/decorators/property-param';
 import { User } from '../user/entities/user.entity';
+import { ResAccessPortDto } from './dto/access-port';
 import { BodyCreatePortDto, ResCreatePortDto } from './dto/create-port.dto';
 import { ResDeletePortDto } from './dto/delete-port.dto';
 import { BodyEditPortDto, ResEditPortDto } from './dto/edit-port.dto';
@@ -53,6 +54,16 @@ export class PortController {
   async get(@PropertyParam('port') port: Port): Promise<ResGetPortDto> {
     const res = new ResGetPortDto();
     res.port = port;
+    return res;
+  }
+
+  @Get(':portId/access')
+  @ApiOperation({ summary: '포트 접근 토큰 발급' })
+  @ApiParam({ name: 'portId', description: '포트 ID' })
+  @ApiResponseBody(ResAccessPortDto)
+  async access(@PropertyParam('port') port: Port): Promise<ResAccessPortDto> {
+    const res = new ResAccessPortDto();
+    res.token = this.portService.access(port);
     return res;
   }
 
