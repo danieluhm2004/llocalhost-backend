@@ -26,7 +26,7 @@ export class Port extends BaseEntity {
     description: '포트 이름',
     example: 'danieluhm2004',
     pattern: {
-      regex: /^[a-zA-Z0-9-_]{1,61}$/,
+      regex: /^[a-zA-Z0-9-]{1,30}$/,
       message: '이름은 영문, 숫자, -, _ 만 사용할 수 있습니다.',
     },
   })
